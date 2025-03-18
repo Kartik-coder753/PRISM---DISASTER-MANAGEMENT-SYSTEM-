@@ -1,0 +1,147 @@
+develop an disaster management system using gen ai tools which is user responsive and name it as PRISM(PREPAREDNESS AND RESPONSE INFORMATION SYSTEM MANAGEMENT)  written using html font family usage bold and apply tailwind css property for its effectiveness , the application must be deployed in a user interface using HTML , CSS , JS and frameworks like REACT JS and TAILWIND CSS (for effectivity) containing a background images using html image tags feature of a disaster hitting image taken from goggle or developed using ai images gen ai  generation  now the system should contain a database or a dataset(from kaggle) of all the disasters data in india as mentioned further using API or pretrained contains cyclones  , earthquakes , floods , thunderstorm , rainfall measure and landslides data should work on three parts first a real time notification sending system for all the users with an alert system configuration enabled to users through a whatsapp message or text msg ( using whatsapp notification api ) to all the users within 72 hours of impact of certain calamity as mentioned above  also implement a single-flight mechanism. Normally, every request would fetch data from the backend, which isn’t feasible with the number of simultaneous requests we get during a disaster. Instead, we group identical requests and fetch data from the backend only once, then share that response with all grouped requests. now for the user location implementation to create a hotspot of a particular calamity near the area so that to send governement help The information is optimized based on the user’s location or registered areas. We receive disaster data directly through a dedicated line connected to the Meteorological Service Support Center and collaborate with various agencies to provide timely and comprehensive alerts. This will enable us to offer some of the fastest disaster notifications in India. 
+disaster coverege of all types :-  cyclones - predicts genesis , track paths , and forecasts weather  impacts like wind speeds , rainfall , and storm surges .
+floods: uses multi - data sources (rainfall , river levels  , satellite imagery , social media) to generate real -time flood forecasts and prioritize relief efforts.
+Earthquakes:- delivers real-time updates and assessments of aftershocks and damage to aid rescue operations .
+Landslides and soil erosion:- monitors rainfall data and geological conditions to predict high-risk zones and guide preventive measures.
+Drought and temperature variations:- Uses historical data and climate trends to provide forecasts and alert regions about water conservation and agricultural risks.
+Optimized and Timely Information Delivery
+○ Disaster alerts are customized based on user location and registered areas.
+○ Collaborations with the Meteorological Service Support Center and other agencies
+enable PRISM to deliver some of the fastest disaster notifications in India.
+4. Accessibility for Every Citizen
+○ Voice reading functionality and customizable color schemes ensure accessibility for
+visually impaired users and individuals with different types of color vision.
+○ Offline notifications ensure users without internet access receive critical updates
+through collaborations with local aid organizations.
+5. Resilient and Scalable Infrastructure
+○ PRISM uses cloud technology, caching, and a single-flight mechanism to handle
+millions of simultaneous requests during disasters without server crashes.
+○ The app avoids unnecessary features like ads or login requirements to reduce server
+strain and ensure uninterrupted service.
+6. Simplified Notifications and Resource Optimization
+○ PRISM provides concise notifications, filtering out unnecessary alerts to prevent user
+fatigue.
+○ Example: Flood alerts prioritize updates based on actual danger levels rather than
+frequent fluctuations caused by tides.
+○ Call detail records (CDR) and mobile positioning data (MPD) help track population
+movements, enabling strategic disaster response planning.
+Location-based Information
+The information is optimized based on the user’s location or registered areas. We
+receive disaster data directly through a dedicated line connected to the
+Meteorological Service Support Center and collaborate with various agencies to
+provide timely and comprehensive alerts. This will enable us to offer some of the
+fastest disaster notifications in India.
+➔ Accessibility Features
+One major focus is accessibility, ensuring everyone can receive information in the
+format that best suits them. For example, we offer a voice reading function and color
+schemes adapted for different types of color vision. Another priority is reachability. No
+matter how refined the user interface or how advanced the technology is, if the app’s
+servers crash during a disaster, it’s useless. Ensuring that people can quickly and
+reliably access information is crucial. We also enable the customization of the color
+scheme based on individual color vision types.
+➔ Server Optimization
+When an earthquake hits, millions of requests flood in simultaneously, making it
+extremely challenging to handle. At PRISM, we use cloud technology and caching to
+return responses quickly.
+For instance, we don’t have a login feature because it would require server-side
+processing for data retrieval, increasing the risk of server crashes. We’ve also
+avoided ads, as loading them places additional strain on the network, causing delays.
+➔ Single-Flight Mechanism
+We implemented a single-flight mechanism. Normally, every request would fetch data
+from the backend, which isn’t feasible with the number of simultaneous requests we
+get during a disaster. Instead, we group identical requests and fetch data from the
+backend only once, then share that response with all grouped requests. This
+significantly reduces the server load and allows us to handle high traffic with fewer
+resources.
+➔ Notification Mechanisms
+We aim for comfortable notifications. For example, with flood alerts, water levels
+fluctuate constantly, and high tides can temporarily push levels past the danger
+threshold. If we sent a notification every time this happened, users would get
+overwhelmed. So, we limit notifications to one initial alert or exclude them entirely if
+we can determine it’s caused by tidal changes rather than a flood risk.
+
+CYCLONE:-
+Cyclone Genesis Forecasting: Using AI-driven models, PRISM predicts cyclone
+formation, both in the short-term and long-term, providing sufficient lead time for
+authorities to initiate emergency responses. These forecasts are based on historical
+cyclone data, global atmospheric, and oceanic conditions.
+2. Cyclone Path Prediction with Dynamic Correction: PRISM utilizes deep learning
+to predict the path of a cyclone with high accuracy, continuously refining these
+predictions using real-time data and advanced similarity searches. This ensures that
+warnings are updated as new information becomes available.
+3. Impact Forecasting: The system forecasts the cyclone's weather impact, including
+wind speeds, rainfall intensity, and storm surges. PRISM uses this information to
+create spatial-temporal impact maps, identifying areas most likely to experience
+significant damage.
+4. Hydrological Flood Forecasting: Coupling rainfall data with hydrological models,
+PRISM predicts potential flood risks during cyclone events. The system generates
+early alerts on flood-prone areas, allowing authorities to take proactive measures to
+safeguard lives and property.
+5. Real-Time Data Integration for Disaster Response: PRISM integrates multi-source
+data, including satellite imagery, government agency reports, and social media
+to monitor cyclone effects in real-time. The system’s machine learning algorithms
+analyze this data to assist disaster response teams in mobilizing resources efficiently.
+6. Tracking Population Movement: By utilizing Call Detail Records (CDR) and
+Mobile Positioning Data (MPD), PRISM tracks the movement of populations during
+Disseminating Alerts and Warnings: PRISM ensures that warnings and
+instructions are delivered across different communication channels such as Google
+Maps, smartphone notifications, and SMS alerts for those without internet access.
+Partnering with local aid organizations ensures that no one is left without critical
+information during a disaster.
+
+floods:-
+The PRISM app monitors real-time rainfall data and compares it to average levels
+to detect potential flooding. If an area experiences excessive rainfall, the app
+generates early alerts for nearby low-lying or high-risk areas.
+PRISM notifies users to prepare by purchasing essential items, avoiding risky
+outdoor activities, and ensuring they are ready for possible evacuation, ensuring they
+remain safe in flood-prone areas.
+● By integrating real-time data and AI-powered predictions, PRISM empowers users
+with the tools they need for flood preparedness, significantly reducing the risk and
+impact of floods
+
+Earthquakes:-
+Earthquake Detection and Forecasting: According to the U.S. Geological
+Survey (USGS) and other experts, predicting earthquakes with precision is not
+currently possible. As a result, scientists can only provide forecasts based on
+seismic activity patterns and historical data, rather than exact predictions. The
+app will integrate with global seismic data sources and real-time earthquake
+monitoring systems. Using seismograph data, the app will detect the magnitude,
+epicenter, and depth of earthquakes as soon as they occur. It will analyze historical
+earthquake patterns, focusing on active tectonic zones like the Himalayas and
+Arakan Yoma fold belt, to predict potential earthquake-prone areas. Machine
+learning algorithms will continuously learn from this data, improving the accuracy of
+earthquake predictions.
+2. Impact Assessment and Early Warning: With real-time seismic data, the app will
+issue early warnings based on the earthquake’s intensity and proximity to
+
+populated areas. By utilizing AI and geospatial analysis, the app can model the
+expected impact of the earthquake, helping users assess the danger in their specific
+region. It will also provide estimated damage areas and aftershock predictions,
+giving people enough time to take precautionary actions like evacuating buildings or
+finding safe spots.
+3. Post-Earthquake Guidance and Resource Management: After an earthquake, the
+app will offer real-time updates on infrastructure damage, available emergency
+shelters, and health and safety protocols. It will provide first-aid tips, rescue
+operations status, and guide users on safe evacuation routes. Additionally, it will
+assess critical infrastructure like roads, bridges, and hospitals, offering information
+on the nearest available resources.
+4. Data Integration and Community Engagement: The app will use social media
+monitoring and crowdsourced data from users to track real-time information about
+earthquake aftermath, such as damage reports or injured people, and to coordinate
+community responses. Which works same as the store review for example when
+earthquake will hit people there can share there experience on how they felt and
+attach video/images with it so other people can view the damages . It will also enable
+geo-tagged damage reports, helping authorities assess the affected areas quickly.
+This system will be enhanced with Call Detail Records (CDRs) and mobile
+positioning data (MPD) to track populations' movement and provide customized
+recommendations based on their locations.
+5. Resource and Relief Mobilization: The app will provide guidance on emergency
+kits, rescue operations, and safe shelters, ensuring users have access to real-time
+disaster relief information. Based on real-time updates, it will suggest routes for
+rescue teams and relief supplies, helping aid organizations better allocate
+resources to the affected regions.
+
+
+
+
