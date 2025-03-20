@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -10,4 +13,27 @@
   body {
     @apply font-sans antialiased bg-background text-foreground;
   }
+}
+
+.prism-title {
+  font-family: 'Orbitron', sans-serif;
+  @apply text-5xl font-bold bg-clip-text text-transparent 
+    bg-gradient-to-r from-red-600 to-orange-600
+    tracking-wider;
+}
+
+.prism-subtitle {
+  font-family: 'Inter', sans-serif;
+  @apply text-xl text-muted-foreground mt-2;
+}
+
+.hero-section {
+  background-image: url('https://static.vecteezy.com/system/resources/previews/023/671/725/non_2x/various-natural-disaster-management-icon-based-logo-illustration-with-dummy-text-and-white-background-for-ngo-or-non-governmental-organization-industry-vector.jpg');
+  background-size: cover;
+  background-position: center;
+  @apply relative;
+}
+
+.hero-overlay {
+  @apply absolute inset-0 bg-black/50;
 }
