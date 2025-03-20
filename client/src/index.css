@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
@@ -16,10 +16,10 @@
 }
 
 .prism-title {
-  font-family: 'Orbitron', sans-serif;
-  @apply text-5xl font-bold bg-clip-text text-transparent 
-    bg-gradient-to-r from-red-600 to-orange-600
-    tracking-wider;
+  font-family: 'Black Ops One', system-ui;
+  @apply text-6xl font-bold bg-clip-text text-transparent 
+    bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500
+    tracking-wider leading-tight;
 }
 
 .prism-subtitle {
@@ -28,12 +28,36 @@
 }
 
 .hero-section {
-  background-image: url('https://static.vecteezy.com/system/resources/previews/023/671/725/non_2x/various-natural-disaster-management-icon-based-logo-illustration-with-dummy-text-and-white-background-for-ngo-or-non-governmental-organization-industry-vector.jpg');
-  background-size: cover;
-  background-position: center;
-  @apply relative;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d3436 100%);
+  @apply relative min-h-[60vh] flex items-center justify-center;
 }
 
-.hero-overlay {
-  @apply absolute inset-0 bg-black/50;
+.alert-badge {
+  @apply animate-pulse bg-red-500 text-white px-3 py-1 rounded-full 
+    flex items-center gap-2 font-semibold;
+}
+
+.disaster-card {
+  @apply transition-all duration-300 hover:scale-105 hover:shadow-lg;
+  background: linear-gradient(to bottom right, var(--card-bg-start), var(--card-bg-end));
+}
+
+.disaster-card-cyclone {
+  --card-bg-start: theme('colors.blue.500/0.1');
+  --card-bg-end: theme('colors.blue.600/0.05');
+}
+
+.disaster-card-earthquake {
+  --card-bg-start: theme('colors.orange.500/0.1');
+  --card-bg-end: theme('colors.orange.600/0.05');
+}
+
+.disaster-card-flood {
+  --card-bg-start: theme('colors.cyan.500/0.1');
+  --card-bg-end: theme('colors.cyan.600/0.05');
+}
+
+.disaster-card-storm {
+  --card-bg-start: theme('colors.purple.500/0.1');
+  --card-bg-end: theme('colors.purple.600/0.05');
 }
