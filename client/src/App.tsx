@@ -6,6 +6,7 @@ import Home from "@/pages/home";
 import Dashboard from "@/pages/dashboard";
 import Settings from "@/pages/settings";
 import Notifications from "@/pages/notifications";
+import SafetyGuidelines from "@/pages/safety-guidelines";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -15,6 +16,7 @@ function Router() {
       <Route path="/dashboard/:type" component={Dashboard} />
       <Route path="/settings" component={Settings} />
       <Route path="/notifications" component={Notifications} />
+      <Route path="/safety-guidelines" component={SafetyGuidelines} />
       <Route component={NotFound} />
     </Switch>
   );

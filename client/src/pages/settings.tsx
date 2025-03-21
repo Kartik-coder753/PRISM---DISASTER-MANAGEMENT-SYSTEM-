@@ -12,7 +12,7 @@ export default function Settings() {
   const { toast } = useToast();
   const [phoneNumber, setPhoneNumber] = useState("");
   const [location, setLocation] = useState("");
-  
+
   const [settings, setSettings] = useState({
     whatsapp: true,
     sms: false,
@@ -23,7 +23,14 @@ export default function Settings() {
       earthquake: true,
       flood: true,
       storm: true
-    }
+    },
+    alertPreferences: {
+      immediate: true,
+      hourly: true,
+      daily: true,
+      weekly: false
+    },
+    radius: "50" // km
   });
 
   const handleSave = () => {
@@ -105,10 +112,30 @@ export default function Settings() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <MapPin className="h-5 w-5" />
-              Location Settings
+              Location & Alert Preferences
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-6">
+            <div className="space-y-2">
+              <Label>Alert Radius (km)</Label>
+              <Select 
+                value={settings.radius}
+                onValueChange={(value) => 
+                  setSettings(prev => ({ ...prev, radius: value }))
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select alert radius" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="10">10 km</SelectItem>
+                  <SelectItem value="25">25 km</SelectItem>
+                  <SelectItem value="50">50 km</SelectItem>
+                  <SelectItem value="100">100 km</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
             <div className="space-y-2">
               <Label>Alert Severity Level</Label>
               <Select 
@@ -126,6 +153,76 @@ export default function Settings() {
                   <SelectItem value="extreme">Extreme Events Only</SelectItem>
                 </SelectContent>
               </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Alert Frequency</Label>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="immediate">Immediate Alerts</Label>
+                  <Switch
+                    id="immediate"
+                    checked={settings.alertPreferences.immediate}
+                    onCheckedChange={(checked) => 
+                      setSettings(prev => ({
+                        ...prev,
+                        alertPreferences: {
+                          ...prev.alertPreferences,
+                          immediate: checked
+                        }
+                      }))
+                    }
+                  />
+                </div>
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="hourly">Hourly Updates</Label>
+                  <Switch
+                    id="hourly"
+                    checked={settings.alertPreferences.hourly}
+                    onCheckedChange={(checked) => 
+                      setSettings(prev => ({
+                        ...prev,
+                        alertPreferences: {
+                          ...prev.alertPreferences,
+                          hourly: checked
+                        }
+                      }))
+                    }
+                  />
+                </div>
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="daily">Daily Summary</Label>
+                  <Switch
+                    id="daily"
+                    checked={settings.alertPreferences.daily}
+                    onCheckedChange={(checked) => 
+                      setSettings(prev => ({
+                        ...prev,
+                        alertPreferences: {
+                          ...prev.alertPreferences,
+                          daily: checked
+                        }
+                      }))
+                    }
+                  />
+                </div>
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="weekly">Weekly Report</Label>
+                  <Switch
+                    id="weekly"
+                    checked={settings.alertPreferences.weekly}
+                    onCheckedChange={(checked) => 
+                      setSettings(prev => ({
+                        ...prev,
+                        alertPreferences: {
+                          ...prev.alertPreferences,
+                          weekly: checked
+                        }
+                      }))
+                    }
+                  />
+                </div>
+              </div>
             </div>
 
             <div className="space-y-2">
