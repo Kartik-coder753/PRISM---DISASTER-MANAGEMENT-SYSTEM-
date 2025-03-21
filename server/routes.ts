@@ -46,6 +46,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json(disasters);
   });
 
+  app.get('/api/disasters/location/:lat/:lng/:radius', async (req, res) => {
+    const lat = parseFloat(req.params.lat);
+    const lng = parseFloat(req.params.lng);
+    const radius = parseFloat(req.params.radius);
+
+    if (isNaN(lat) || isNaN(lng) || isNaN(radius)) {
+      return res.status(400).json({ message: 'Invalid coordinates or radius' });
+    }
+
+    const disasters = await storage.getDisastersByLocation(lat, lng, radius);
+    res.json(disasters);
+  });
+
   app.post('/api/disasters', async (req, res) => {
     const result = insertDisasterSchema.safeParse(req.body);
     if (!result.success) {
@@ -68,6 +81,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json(alerts);
   });
 
+  app.get('/api/alerts/72h', async (_req, res) => {
+    const alerts = await storage.get72HourAlerts();
+    res.json(alerts);
+  });
+
   app.post('/api/alerts', async (req, res) => {
     const result = insertAlertSchema.safeParse(req.body);
     if (!result.success) {
@@ -77,6 +95,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
     const alert = await storage.createAlert(result.data);
     broadcast({ type: 'new_alert', data: alert });
     res.status(201).json(alert);
+  });
+
+  app.patch('/api/alerts/:id/status', async (req, res) => {
+    const { status } = req.body;
+    if (!status || typeof status !== 'string') {
+      return res.status(400).json({ message: 'Invalid status' });
+    }
+
+    const alert = await storage.updateAlertStatus(Number(req.params.id), status);
+    if (!alert) {
+      return res.status(404).json({ message: 'Alert not found' });
+    }
+
+    broadcast({ type: 'alert_updated', data: alert });
+    res.json(alert);
   });
 
   return httpServer;

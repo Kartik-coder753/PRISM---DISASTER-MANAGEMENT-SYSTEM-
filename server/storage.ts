@@ -1,74 +1,90 @@
 import { type Disaster, type Alert, type InsertDisaster, type InsertAlert } from "@shared/schema";
+import { disasters, alerts } from "@shared/schema"; // Assuming schema exports are correctly structured. Adjust if necessary.
+import { db } from "./db";
+import { eq, and, gte } from "drizzle-orm";
 
 export interface IStorage {
   // Disasters
   getDisasters(): Promise<Disaster[]>;
   getDisasterById(id: number): Promise<Disaster | undefined>;
   getDisastersByType(type: string): Promise<Disaster[]>;
+  getDisastersByLocation(lat: number, lng: number, radius: number): Promise<Disaster[]>;
   createDisaster(disaster: InsertDisaster): Promise<Disaster>;
-  
+
   // Alerts
   getAlerts(): Promise<Alert[]>;
   getActiveAlerts(): Promise<Alert[]>;
+  get72HourAlerts(): Promise<Alert[]>;
   createAlert(alert: InsertAlert): Promise<Alert>;
   updateAlertStatus(id: number, status: string): Promise<Alert | undefined>;
 }
 
-export class MemStorage implements IStorage {
-  private disasters: Map<number, Disaster>;
-  private alerts: Map<number, Alert>;
-  private disasterId: number;
-  private alertId: number;
-
-  constructor() {
-    this.disasters = new Map();
-    this.alerts = new Map();
-    this.disasterId = 1;
-    this.alertId = 1;
-  }
-
+export class DatabaseStorage implements IStorage {
   async getDisasters(): Promise<Disaster[]> {
-    return Array.from(this.disasters.values());
+    return await db.select().from(disasters);
   }
 
   async getDisasterById(id: number): Promise<Disaster | undefined> {
-    return this.disasters.get(id);
+    const [disaster] = await db.select().from(disasters).where(eq(disasters.id, id));
+    return disaster;
   }
 
   async getDisastersByType(type: string): Promise<Disaster[]> {
-    return Array.from(this.disasters.values()).filter(d => d.type === type);
+    return await db.select().from(disasters).where(eq(disasters.type, type));
+  }
+
+  async getDisastersByLocation(lat: number, lng: number, radius: number): Promise<Disaster[]> {
+    // Basic implementation - can be enhanced with proper geospatial queries
+    const allDisasters = await this.getDisasters();
+    return allDisasters.filter(disaster => {
+      const dlat = disaster.location.lat;
+      const dlng = disaster.location.lng;
+      const distance = Math.sqrt(Math.pow(dlat - lat, 2) + Math.pow(dlng - lng, 2)) * 111; // rough km conversion
+      return distance <= radius;
+    });
   }
 
   async createDisaster(disaster: InsertDisaster): Promise<Disaster> {
-    const id = this.disasterId++;
-    const newDisaster = { ...disaster, id } as Disaster;
-    this.disasters.set(id, newDisaster);
+    const [newDisaster] = await db.insert(disasters).values(disaster).returning();
     return newDisaster;
   }
 
   async getAlerts(): Promise<Alert[]> {
-    return Array.from(this.alerts.values());
+    return await db.select().from(alerts);
   }
 
   async getActiveAlerts(): Promise<Alert[]> {
-    return Array.from(this.alerts.values()).filter(a => a.status === 'active');
+    return await db.select().from(alerts).where(eq(alerts.status, 'active'));
+  }
+
+  async get72HourAlerts(): Promise<Alert[]> {
+    const threeDaysAgo = new Date();
+    threeDaysAgo.setHours(threeDaysAgo.getHours() - 72);
+
+    return await db
+      .select()
+      .from(alerts)
+      .where(
+        and(
+          eq(alerts.status, 'active'),
+          gte(alerts.timestamp, threeDaysAgo)
+        )
+      );
   }
 
   async createAlert(alert: InsertAlert): Promise<Alert> {
-    const id = this.alertId++;
-    const newAlert = { ...alert, id } as Alert;
-    this.alerts.set(id, newAlert);
+    const [newAlert] = await db.insert(alerts).values(alert).returning();
     return newAlert;
   }
 
   async updateAlertStatus(id: number, status: string): Promise<Alert | undefined> {
-    const alert = this.alerts.get(id);
-    if (!alert) return undefined;
-    
-    const updatedAlert = { ...alert, status };
-    this.alerts.set(id, updatedAlert);
+    const [updatedAlert] = await db
+      .update(alerts)
+      .set({ status })
+      .where(eq(alerts.id, id))
+      .returning();
     return updatedAlert;
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DatabaseStorage();
