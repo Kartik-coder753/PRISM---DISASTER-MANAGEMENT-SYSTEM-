@@ -48,8 +48,10 @@ export class WeatherService {
       humidity: weatherData.main?.humidity || 0
     };
 
+    console.log('Analyzing weather conditions:', conditions);
+
     let severity = 1;
-    
+
     // Wind speed severity (km/h)
     if (conditions.wind_speed > 118) severity = 5; // Hurricane force
     else if (conditions.wind_speed > 89) severity = 4; // Storm force
