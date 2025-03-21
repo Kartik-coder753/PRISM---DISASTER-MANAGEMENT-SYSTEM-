@@ -30,12 +30,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
 
-  // Test endpoint for WhatsApp notifications
+  // Add this to the routes file, before other endpoints
+  app.get('/api/notifications/validate', async (_req, res) => {
+    try {
+      const validationResult = await notificationService.validateSetup();
+      res.json(validationResult);
+    } catch (error) {
+      console.error('Validation endpoint error:', error);
+      res.status(500).json({ 
+        isValid: false, 
+        message: 'Failed to validate notification setup' 
+      });
+    }
+  });
+
+  // Update the test endpoint with better error handling
   app.post('/api/notifications/test', async (req, res) => {
     try {
       const { phoneNumber } = req.body;
       if (!phoneNumber) {
         return res.status(400).json({ message: 'Phone number is required' });
+      }
+
+      // Validate setup first
+      const validationResult = await notificationService.validateSetup();
+      if (!validationResult.isValid) {
+        return res.status(500).json({ 
+          message: `Cannot send test notification: ${validationResult.message}` 
+        });
       }
 
       const testMessage = "🔔 This is a test alert from PRISM Disaster Management System";
@@ -51,6 +73,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: 'Internal server error' });
     }
   });
+
+  // Test endpoint for WhatsApp notifications
+  //This section is kept as is for now, and could be removed or refactored later if needed.
 
   // Weather and prediction routes
   app.get('/api/weather/:lat/:lng', async (req, res) => {
