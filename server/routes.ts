@@ -44,10 +44,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Update the test endpoint with better error handling
+  // Update the test endpoint to support both SMS and WhatsApp
   app.post('/api/notifications/test', async (req, res) => {
     try {
-      const { phoneNumber } = req.body;
+      const { phoneNumber, type = 'sms' } = req.body;
       if (!phoneNumber) {
         return res.status(400).json({ message: 'Phone number is required' });
       }
@@ -61,18 +61,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const testMessage = "🔔 This is a test alert from PRISM Disaster Management System";
-      const success = await notificationService.sendWhatsAppAlert(phoneNumber, testMessage);
+      const success = type === 'sms' 
+        ? await notificationService.sendSMS(phoneNumber, testMessage)
+        : await notificationService.sendWhatsAppAlert(phoneNumber, testMessage);
 
       if (success) {
-        res.json({ message: 'Test notification sent successfully' });
+        res.json({ message: `Test ${type} sent successfully` });
       } else {
-        res.status(500).json({ message: 'Failed to send test notification' });
+        res.status(500).json({ message: `Failed to send test ${type}` });
       }
     } catch (error) {
       console.error('Test notification error:', error);
       res.status(500).json({ message: 'Internal server error' });
     }
   });
+
 
   // Test endpoint for WhatsApp notifications
   //This section is kept as is for now, and could be removed or refactored later if needed.

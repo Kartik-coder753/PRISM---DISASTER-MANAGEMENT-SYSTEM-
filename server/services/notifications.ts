@@ -52,6 +52,31 @@ export class NotificationService {
     return phoneRegex.test(phoneNumber);
   }
 
+  async sendSMS(to: string, message: string) {
+    try {
+      if (!client) {
+        throw new Error('Twilio client not initialized');
+      }
+
+      if (!this.validatePhoneNumber(to)) {
+        throw new Error('Invalid phone number format. Must be +91 followed by 10 digits');
+      }
+
+      console.log('Sending SMS to:', to);
+      const response = await client.messages.create({
+        from: process.env.TWILIO_PHONE_NUMBER,
+        to: to,
+        body: message,
+      });
+
+      console.log('SMS sent successfully:', response.sid);
+      return true;
+    } catch (error) {
+      console.error('SMS notification error:', error);
+      return false;
+    }
+  }
+
   async sendWhatsAppAlert(to: string, message: string) {
     try {
       if (!client) {
@@ -77,8 +102,8 @@ export class NotificationService {
     }
   }
 
-  async sendBulkAlert(numbers: string[], message: string) {
-    console.log(`Sending bulk alert to ${numbers.length} recipients`);
+  async sendBulkAlert(numbers: string[], message: string, type: 'sms' | 'whatsapp' = 'whatsapp') {
+    console.log(`Sending bulk ${type} to ${numbers.length} recipients`);
 
     // Filter out invalid numbers
     const validNumbers = numbers.filter(num => this.validatePhoneNumber(num));
@@ -87,12 +112,13 @@ export class NotificationService {
       return 0;
     }
 
+    const sendMethod = type === 'sms' ? this.sendSMS.bind(this) : this.sendWhatsAppAlert.bind(this);
     const results = await Promise.allSettled(
-      validNumbers.map(number => this.sendWhatsAppAlert(number, message))
+      validNumbers.map(number => sendMethod(number, message))
     );
 
     const successCount = results.filter(r => r.status === 'fulfilled').length;
-    console.log(`Successfully sent ${successCount} out of ${validNumbers.length} alerts`);
+    console.log(`Successfully sent ${successCount} out of ${validNumbers.length} ${type} alerts`);
     return successCount;
   }
 
