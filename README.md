@@ -1,6 +1,7 @@
 # PRISM---DISASTER-MANAGEMENT-SYSTEM-
 
- Tech Stack
+Tech Stack
+
 Frontend
 React 18 with TypeScript
 
